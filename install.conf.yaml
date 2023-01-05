@@ -1,0 +1,12 @@
+- clean: ['~']
+
+- link:
+    ~/.ssh/config:
+        path: ssh/config
+        create: true
+    ~/.zshrc: zshrc
+    ~/bin:
+        path: bin/
+        create: true
+
+
