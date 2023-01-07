@@ -2,11 +2,58 @@
 
 - link:
     ~/.ssh/config:
-        path: ssh/config
-        create: true
-    ~/.zshrc: zshrc
+      path: ssh/config
+      create: true
+    ~/.zshrc:
+      force: true
+      path: zshrc
     ~/bin:
-        path: bin/
-        create: true
+      path: bin/
+      create: true
+    ~/.config/atuin/config.toml: 
+      path: config/atuin/config.toml
+      create: true
 
+- sudo:
+  - aptget:
+     zip:
+     build-essential:
+     jq:
+     joe:
+     htop:
+     tldr:
+     exa:
+     bat:
+     software-properties-common:
+     python3.8: ppa:deadsnakes/ppa
+     python3.9: ppa:deadsnakes/ppa
 
+#  - shell:
+#    - 
+#      description: Downloading oh-my-posh
+#      command: "wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh"
+#      stderr: true
+#    - 
+#      description: Adjusting oh-my-posh binary permissions
+#      command: "chmod +x /usr/local/bin/oh-my-posh"
+#      stderr: true
+#  
+- shell:
+  - 
+    description: Installing Atuin Shell History
+    command: "bash <(curl https://raw.githubusercontent.com/ellie/atuin/main/install.sh)"
+  - 
+    description: Fix Atuin zshrc insertions
+    command: sed -i '/eval "$(atuin init zsh)"/d' zshrc && printf '\neval "$(atuin init zsh)"\n' >> zshrc
+ 
+
+- git:
+    '~/.oh-my-zsh/custom/plugins/zsh-autosuggestions':
+        url: 'https://github.com/zsh-users/zsh-autosuggestions'
+        description: 'oh my zsh - autosuggestions'
+    '~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting':
+        url: 'https://github.com/zsh-users/zsh-syntax-highlighting'
+        description: 'oh my zsh - zsh-syntax-highlighting'
+    '~/.oh-my-zsh/custom/themes/powerlevel10k':
+        url: 'https://github.com/romkatv/powerlevel10k.git'
+        description: 'oh my zsh - powerlevel10k' 
